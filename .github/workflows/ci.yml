@@ -1,0 +1,36 @@
+name: Simple CI/CD
+
+# Триггер: срабатывает при каждом push в ветку main
+on:
+  push:
+    branches:
+      - main
+
+# Определение задач (jobs)
+jobs:
+  build:
+    # GitHub будет использовать виртуальную машину Ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+      # Шаг 1: Клонирование репозитория
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Шаг 2: Установка Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16  # Укажите версию Node.js
+
+      # Шаг 3: Установка зависимостей
+      - name: Install dependencies
+        run: npm install
+
+      # Шаг 4: Запуск тестов
+      - name: Run tests
+        run: npm test
+
+      # Шаг 5: Сборка проекта
+      - name: Build project
+        run: npm run build
